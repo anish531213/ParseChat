@@ -52,6 +52,7 @@ class LoginViewController: UIViewController {
                 print("User Sucessfully Registered")
                 self.performSegue(withIdentifier: "loginSegue", sender: nil)
             } else {
+                self.presentAlert(msg: "SignUp Error", description: (error?.localizedDescription)!)
                 print(error?.localizedDescription)
             }
             self.activityIndicator.stopAnimating()

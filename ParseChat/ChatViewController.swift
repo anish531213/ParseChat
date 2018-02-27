@@ -26,8 +26,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 50
         
-        activityIndicator.startAnimating()
+        //activityIndicator.startAnimating()
         
+        //onTimer()
         Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.onTimer), userInfo: nil, repeats: true)
         // Do any additional setup after loading the view.
     }
@@ -65,7 +66,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @objc func onTimer() {
-        //print ("Timer Tick Tick")
+        print ("Timer Tick Tick")
         // Add code to be run periodically
         let query = PFQuery(className: "Message")
         query.whereKeyExists("text").includeKey("user")
@@ -74,16 +75,18 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             if error == nil {
                 //print(objects)
                 self.messages = objects!
-                self.tableView.reloadData()
             } else {
                 print(error?.localizedDescription)
             }
+            self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
         }
             
     }
     
-    
+    @IBAction func logoutAction(_ sender: Any) {
+        NotificationCenter.default.post(name: NSNotification.Name("didLogout"), object: nil)
+    }
     
     /*
     // MARK: - Navigation
